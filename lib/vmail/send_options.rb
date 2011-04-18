@@ -5,7 +5,7 @@ module Vmail
 
     def parse(argv)
       OptionParser.new do |opts|
-        opts.banner = "Usage:  vmailsend" 
+        opts.banner = "Usage:  vmailsend"
         opts.separator ""
         opts.separator "Specific options:"
         opts.on("-c", "--config path", String, "Path to config file") do |config_file|
@@ -30,7 +30,7 @@ module Vmail
           else
             puts <<EOF
 
-Missing config file! 
+Missing config file!
 
 #{INSTRUCTIONS}
 EOF
@@ -38,7 +38,7 @@ EOF
           end
 
           @config = YAML::load(File.read(@config_file))
-          if @config['password'].nil?
+          if @config['password'].nil? and !@config['use_keychain']
             @config['password'] = ask("Enter gmail password (won't be visible & won't be persisted):") {|q| q.echo = false}
           end
 
